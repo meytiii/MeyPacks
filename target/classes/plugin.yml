@@ -1,0 +1,10 @@
+name: MeyPacks
+version: '1.0-SNAPSHOT'
+main: com.meytiii.meypacks.MeyPacks
+api-version: 1.19
+authors: [MeyTiii]
+description: A Minecraft plugin for portal backpacks.
+commands:
+  backpack:
+    description: Opens your portal backpack.
+    usage: /<command>
