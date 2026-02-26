@@ -6,6 +6,37 @@ authors: [meytiii]
 description: A Minecraft plugin for portal backpacks.
 commands:
   meypack:
-    description: Opens your portal backpack.
-    usage: /<command>
+    description: Opens your portal backpack or manages other backpacks.
+    usage: /meypack [open <player>]
     aliases: [mp]
+permissions:
+  meypack.use:
+    description: Allows the player to use /meypack to open their own backpack.
+    default: true
+  meypack.haveitem:
+    description: Allows the player to have the backpack icon in their inventory.
+    default: true
+  meypack.keepondeath:
+    description: Allows the player to keep their backpack items on death.
+    default: false
+  meypack.admin.open:
+    description: Allows an admin to open and edit another player's backpack.
+    default: op
+  meypack.size.1:
+    description: Grants a backpack size of 1 row (9 slots).
+    default: true
+  meypack.size.2:
+    description: Grants a backpack size of 2 rows (18 slots).
+    default: op
+  meypack.size.3:
+    description: Grants a backpack size of 3 rows (27 slots).
+    default: op
+  meypack.size.4:
+    description: Grants a backpack size of 4 rows (36 slots).
+    default: op
+  meypack.size.5:
+    description: Grants a backpack size of 5 rows (45 slots).
+    default: op
+  meypack.size.6:
+    description: Grants a backpack size of 6 rows (54 slots).
+    default: op

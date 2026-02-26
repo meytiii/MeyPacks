@@ -4,17 +4,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent; // <-- Make sure this is imported
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class BackpackListener implements Listener {
 
@@ -33,7 +36,9 @@ public class BackpackListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        player.getInventory().setItem(8, backpackManager.createBackpackIcon());
+        if (player.hasPermission("meypack.haveitem")) {
+            player.getInventory().setItem(8, backpackManager.createBackpackIcon());
+        }
         Inventory loadedBackpack = dataManager.loadBackpack(player);
         if (loadedBackpack != null) {
             backpacks.put(player.getUniqueId(), loadedBackpack);
@@ -41,6 +46,33 @@ public class BackpackListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
+        if (event.getPlayer().hasPermission("meypack.haveitem")) {
+            plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+                event.getPlayer().getInventory().setItem(8, backpackManager.createBackpackIcon());
+            }, 1L);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        Player player = event.getEntity();
+        UUID playerUUID = player.getUniqueId();
+        
+        if (!player.hasPermission("meypack.keepondeath")) {
+            if (backpacks.containsKey(playerUUID)) {
+                Inventory backpack = backpacks.get(playerUUID);
+                event.getDrops().addAll(
+                    Arrays.stream(backpack.getContents())
+                          .filter(item -> item != null)
+                          .collect(Collectors.toList())
+                );
+                backpack.clear();
+            }
+        }
+    }
+    
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
@@ -50,13 +82,6 @@ public class BackpackListener implements Listener {
             backpacks.remove(playerUUID);
             plugin.getLogger().info("Saved and removed backpack for " + player.getName());
         }
-    }
-    
-    @EventHandler
-    public void onPlayerRespawn(PlayerRespawnEvent event) {
-        plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
-            event.getPlayer().getInventory().setItem(8, backpackManager.createBackpackIcon());
-        }, 1L);
     }
 
     @EventHandler
@@ -85,7 +110,6 @@ public class BackpackListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         ItemStack itemInHand = player.getInventory().getItemInMainHand();
-
         if (backpackManager.isBackpackIcon(itemInHand)) {
             if (event.getAction().name().contains("RIGHT_CLICK")) {
                 event.setCancelled(true);
