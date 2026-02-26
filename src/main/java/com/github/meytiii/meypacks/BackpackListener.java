@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -82,4 +83,23 @@ public class BackpackListener implements Listener {
             player.openInventory(backpack);
         }
     }
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        ItemStack itemInHand = player.getInventory().getItemInMainHand();
+
+        if (backpackManager.isBackpackIcon(itemInHand)) {
+            if (event.getAction().name().contains("RIGHT_CLICK")) {
+                event.setCancelled(true);
+
+                UUID playerUUID = player.getUniqueId();
+                Inventory backpack = backpacks.computeIfAbsent(playerUUID, id -> {
+                    String title = player.getName() + "'s MeyPack";
+                    return Bukkit.createInventory(player, 54, title);
+                });
+                player.openInventory(backpack);
+            }
+        }
+    }
+
 }
