@@ -15,7 +15,7 @@ public final class MeyPacks extends JavaPlugin {
     public void onEnable() {
         getLogger().info("MeyPacks has been enabled!");
 
-        this.getCommand("backpack").setExecutor(new BackpackCommand(this.backpacks));
+        this.getCommand("meypack").setExecutor(new BackpackCommand(this.backpacks));
     }
 
     @Override

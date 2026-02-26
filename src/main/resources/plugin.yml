@@ -5,6 +5,7 @@ api-version: '1.21'
 authors: [meytiii]
 description: A Minecraft plugin for portal backpacks.
 commands:
-  backpack:
+  meypack:
     description: Opens your portal backpack.
     usage: /<command>
+    aliases: [mp]
