@@ -1,8 +1,8 @@
 name: MeyPacks
 version: '${project.version}'
-main: com.github.meytiii.meypacks.MeyPacks
-api-version: 1.19
-authors: [MeyTiii]
+main: com.meytiii.meypacks.MeyPacks
+api-version: '1.21'
+authors: [meytiii]
 description: A Minecraft plugin for portal backpacks.
 commands:
   backpack:
