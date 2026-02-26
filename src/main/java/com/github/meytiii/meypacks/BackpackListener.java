@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerInteractEvent; // <-- Make sure this is imported
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -34,7 +34,6 @@ public class BackpackListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         player.getInventory().setItem(8, backpackManager.createBackpackIcon());
-
         Inventory loadedBackpack = dataManager.loadBackpack(player);
         if (loadedBackpack != null) {
             backpacks.put(player.getUniqueId(), loadedBackpack);
@@ -71,10 +70,8 @@ public class BackpackListener implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         ItemStack clickedItem = event.getCurrentItem();
-
         if (event.getClickedInventory() == player.getInventory() && backpackManager.isBackpackIcon(clickedItem)) {
             event.setCancelled(true);
-
             UUID playerUUID = player.getUniqueId();
             Inventory backpack = backpacks.computeIfAbsent(playerUUID, id -> {
                 String title = player.getName() + "'s MeyPack";
@@ -83,6 +80,7 @@ public class BackpackListener implements Listener {
             player.openInventory(backpack);
         }
     }
+
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
@@ -91,7 +89,6 @@ public class BackpackListener implements Listener {
         if (backpackManager.isBackpackIcon(itemInHand)) {
             if (event.getAction().name().contains("RIGHT_CLICK")) {
                 event.setCancelled(true);
-
                 UUID playerUUID = player.getUniqueId();
                 Inventory backpack = backpacks.computeIfAbsent(playerUUID, id -> {
                     String title = player.getName() + "'s MeyPack";
@@ -101,5 +98,4 @@ public class BackpackListener implements Listener {
             }
         }
     }
-
 }
