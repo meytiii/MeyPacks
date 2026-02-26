@@ -7,6 +7,8 @@ public final class MeyPacks extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("MeyPacks has been enabled!");
+
+        this.getCommand("backpack").setExecutor(new BackpackCommand());
     }
 
     @Override
