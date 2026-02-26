@@ -2,6 +2,9 @@
 
 MeyPacks is a lightweight and simple backpack plugin that provides players with a persistent, portable inventory.
 
+![MeyPack Logo](meypacks.png)
+
+
 ## Features
 
 - Persistent backpacks that save across server restarts.
