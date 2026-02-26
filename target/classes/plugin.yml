@@ -1,5 +1,5 @@
 name: MeyPacks
-version: '1.1.2'
+version: '1.1.8'
 main: com.github.meytiii.meypacks.MeyPacks
 api-version: '1.21'
 authors: [meytiii]

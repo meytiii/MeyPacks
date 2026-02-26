@@ -25,7 +25,7 @@ public class BackpackManager {
         ItemStack item = new ItemStack(Material.ENDER_CHEST);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "Portal MeyPack");
+        meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "MeyPack");
         meta.setLore(Collections.singletonList(ChatColor.GRAY + "Click to open your backpack!"));
 
         meta.addEnchant(Enchantment.RIPTIDE, 1, true);

@@ -6,7 +6,7 @@
 
     <groupId>com.meytiii</groupId>
     <artifactId>MeyPacks</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.8</version>
     <packaging>jar</packaging>
 
     <name>MeyPacks</name>
