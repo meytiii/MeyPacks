@@ -1,4 +1,4 @@
-package com.meytiii.meypacks;
+package com.github.meytiii.meypacks;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
