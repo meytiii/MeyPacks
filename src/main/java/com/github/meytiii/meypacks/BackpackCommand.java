@@ -6,17 +6,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.ChatColor;
 
 import java.util.Map;
 import java.util.UUID;
 
 public class BackpackCommand implements CommandExecutor {
 
-    // A field to hold the map that we get from the main class
     private final Map<UUID, Inventory> backpacks;
 
-    // The Constructor: This is called from the main class.
-    // It receives the backpacks map and stores it in our field.
     public BackpackCommand(Map<UUID, Inventory> backpacks) {
         this.backpacks = backpacks;
     }
@@ -32,7 +30,9 @@ public class BackpackCommand implements CommandExecutor {
         UUID playerUUID = player.getUniqueId();
 
         Inventory backpack = backpacks.computeIfAbsent(playerUUID, id -> {
-            return Bukkit.createInventory(player, 27, "My Portal Backpack");
+            String title = player.getName() + "'s MeyPack";
+
+            return Bukkit.createInventory(player, 54, title);
         });
 
         player.openInventory(backpack);
